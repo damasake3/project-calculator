@@ -34,16 +34,37 @@ buttons.addEventListener("click", (e) => {
 
 });
 
-function specialOps(id){
+function specialOps(id) {
     console.log(`Pressed ${id}`);
     switch (id) {
         case "clear":
             clearAll();
             break;
+        case "decimal":
+            decimalPoint();
     }
 }
 
-function clearAll(){
+function decimalPoint() {
+    if (checkDecimal(screen.innerText)) {
+        console.log("It already has a decimal");
+    }
+    else {
+        screen.innerText += ".";
+        console.log("Add decimal point");
+    }
+}
+
+function checkDecimal(num){
+    if (screen.innerText.includes(".")) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function clearAll() {
     console.clear();
     console.log("Clear All");
     num1, num2, operator = undefined;
@@ -70,7 +91,7 @@ function numOps(target, opPressed) {
     console.log("Number Pressed");
     if (opPressed === false) {
         console.log("Not opPressed.")
-        if (screen.innerText == 0) {
+        if (screen.innerText == 0 && !checkDecimal(screen.innerText)) {
             screen.innerText = target.value;
             num1 = Number(screen.innerText);
         }
@@ -81,7 +102,7 @@ function numOps(target, opPressed) {
     }
     else {
         console.log("Not opPressed.")
-        if (screen.innerText == 0) {
+        if (screen.innerText == 0 && !checkDecimal(screen.innerText)) {
             screen.innerText = target.value;
             num2 = Number(screen.innerText);
         }
@@ -106,9 +127,20 @@ function equalOps(target) {
     console.log("Equal pressed");
     console.log(target.value);
     console.log(`${num1} ${operator} ${num2}`);
+    console.log(operate(num1,num2,operator));
 
-    screen.innerText = operate(num1, num2, operator);
+    let answer = operate(num1, num2, operator).toFixed(2);
+    let decimalNum = answer.split(".");
+
+    if (decimalNum[1] == 0){
+        console.log(`gudam ${decimalNum[1]}`);
+        answer = Number(answer).toFixed(0);
+    }
+
+    screen.innerText = answer;
     num1 = screen.innerText;
+
+
 }
 
 function add(num1, num2) {
