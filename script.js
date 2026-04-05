@@ -1,3 +1,11 @@
+const screen = document.querySelector("#screen");
+const buttons = document.querySelector("#buttons");
+
+buttons.addEventListener("click", (e) => {
+    let target = e.target;
+    console.log(target.id);
+});
+
 let num1;
 let operator;
 let num2;
@@ -19,6 +27,7 @@ function divide(num1, num2) {
     return num1 / num2;
 }
 
+//When User presses `=` button
 function operate(num1, num2, operator) {
     switch (operator) {
         case "+":
