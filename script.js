@@ -7,6 +7,8 @@ let operator;
 let num2;
 let opPressed = false;
 
+console.log(num1, num2, operator, opPressed, "\n");
+
 buttons.addEventListener("click", (e) => {
     let target = e.target;
     console.log(target.id);
@@ -26,10 +28,28 @@ buttons.addEventListener("click", (e) => {
             break;
         case "special":
             console.log("special");
+            specialOps(target.id);
             break;
     }
 
 });
+
+function specialOps(id){
+    console.log(`Pressed ${id}`);
+    switch (id) {
+        case "clear":
+            clearAll();
+            break;
+    }
+}
+
+function clearAll(){
+    console.clear();
+    console.log("Clear All");
+    num1, num2, operator = undefined;
+    opPressed = false;
+    screen.innerText = 0;
+}
 
 function classListScan(classList) {
     if (classList.contains("num")) {
