@@ -4,6 +4,7 @@ const buttons = document.querySelector("#buttons");
 buttons.addEventListener("click", (e) => {
     let target = e.target;
     console.log(target.id);
+    console.log(target.value);
 });
 
 let num1;
