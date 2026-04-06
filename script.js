@@ -40,9 +40,27 @@ function specialOps(id) {
         case "clear":
             clearAll();
             break;
+        case "clearEntry":
+            clearEntry();
+            break;
         case "decimal":
             decimalPoint();
     }
+}
+
+function clearEntry(){
+    console.log("clearEntry");
+    screen.innerText = screen.innerText.slice(0,-1);
+    console.log(`On Display: ${screen.innerText}`);
+    console.log(`${num1} ${operator} ${num2}`);
+}
+
+function clearAll() {
+    console.clear();
+    console.log("Clear All");
+    num1, num2, operator = undefined;
+    opPressed = false;
+    screen.innerText = 0;
 }
 
 function decimalPoint() {
@@ -62,14 +80,6 @@ function checkDecimal(num){
     else {
         return false;
     }
-}
-
-function clearAll() {
-    console.clear();
-    console.log("Clear All");
-    num1, num2, operator = undefined;
-    opPressed = false;
-    screen.innerText = 0;
 }
 
 function classListScan(classList) {
