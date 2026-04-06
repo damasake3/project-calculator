@@ -18,7 +18,7 @@ buttons.addEventListener("click", (e) => {
 
     switch (classListScan(classList)) {
         case "num":
-            numOps(target, opPressed);
+            numOps(target, opPressed, "num");
             break;
         case "operator":
             operatorOps(target);
@@ -28,31 +28,33 @@ buttons.addEventListener("click", (e) => {
             break;
         case "special":
             console.log("special");
-            specialOps(target.id);
+            specialOps(target);
             break;
     }
 
 });
 
-function specialOps(id) {
-    console.log(`Pressed ${id}`);
-    switch (id) {
+function specialOps(target) {
+    console.log(`Pressed ${target.id}`);
+    switch (target.id) {
         case "clear":
             clearAll();
             break;
         case "clearEntry":
-            clearEntry();
+            clearEntry(target, "clearEntry");
             break;
         case "decimal":
             decimalPoint();
     }
 }
 
-function clearEntry(){
+function clearEntry(target, mode) {
     console.log("clearEntry");
-    screen.innerText = screen.innerText.slice(0,-1);
     console.log(`On Display: ${screen.innerText}`);
     console.log(`${num1} ${operator} ${num2}`);
+
+
+    numOps(target, opPressed, mode);
 }
 
 function clearAll() {
@@ -73,7 +75,7 @@ function decimalPoint() {
     }
 }
 
-function checkDecimal(num){
+function checkDecimal(num) {
     if (screen.innerText.includes(".")) {
         return true;
     }
@@ -97,29 +99,65 @@ function classListScan(classList) {
     }
 }
 
-function numOps(target, opPressed) {
-    console.log("Number Pressed");
-    if (opPressed === false) {
-        console.log("Not opPressed.")
-        if (screen.innerText == 0 && !checkDecimal(screen.innerText)) {
-            screen.innerText = target.value;
-            num1 = Number(screen.innerText);
-        }
-        else {
-            screen.innerText += target.value;
-            num1 = Number(screen.innerText);
-        }
-    }
-    else {
-        console.log("Not opPressed.")
-        if (screen.innerText == 0 && !checkDecimal(screen.innerText)) {
-            screen.innerText = target.value;
-            num2 = Number(screen.innerText);
-        }
-        else {
-            screen.innerText += target.value;
-            num2 = Number(screen.innerText);
-        }
+function numOps(target, opPressed, mode) {
+
+    switch (mode) {
+        case "num":
+            console.log("Number Pressed");
+            if (opPressed === false) {
+                console.log("Not opPressed.")
+                if (screen.innerText == 0 && !checkDecimal(screen.innerText)) {
+                    console.log(num1, num2, operator);
+                    screen.innerText = target.value;
+                    num1 = Number(screen.innerText);
+                }
+                else {
+                    console.log(num1, num2, operator);
+                    screen.innerText += target.value;
+                    num1 = Number(screen.innerText);
+                }
+            }
+            else {
+                console.log("Not opPressed.")
+                if (screen.innerText == 0 && !checkDecimal(screen.innerText)) {
+                    console.log(num1, num2, operator);
+                    screen.innerText = target.value;
+                    num2 = Number(screen.innerText);
+                }
+                else {
+                    console.log(num1, num2, operator);
+                    screen.innerText += target.value;
+                    num2 = Number(screen.innerText);
+                }
+            }
+            break;
+        default:
+            let temp = 0;
+            console.log("Clear Entry");
+            if (opPressed === false) {
+                console.log("Not opPressed.")
+                if (screen.innerText == 0 && !checkDecimal(screen.innerText)) {
+                    num1 = Number(screen.innerText);
+                    console.log(num1, num2, operator);
+                }
+                else {
+                    screen.innerText = screen.innerText.slice(0, -1);
+                    num1 = Number(screen.innerText);
+                    console.log(num1, num2, operator);
+                }
+            }
+            else {
+                console.log("Is opPressed.")
+                if (screen.innerText == 0 && !checkDecimal(screen.innerText)) {
+                    num2 = Number(screen.innerText);
+                    console.log(num1, num2, operator);
+                }
+                else {
+                    screen.innerText = screen.innerText.slice(0, -1);
+                    num2 = Number(screen.innerText);
+                }
+            }
+            break;
     }
 
 }
@@ -137,18 +175,20 @@ function equalOps(target) {
     console.log("Equal pressed");
     console.log(target.value);
     console.log(`${num1} ${operator} ${num2}`);
-    console.log(operate(num1,num2,operator));
+    console.log(operate(num1, num2, operator));
 
     let answer = operate(num1, num2, operator).toFixed(2);
     let decimalNum = answer.split(".");
 
-    if (decimalNum[1] == 0){
+    if (decimalNum[1] == 0) {
         console.log(`gudam ${decimalNum[1]}`);
         answer = Number(answer).toFixed(0);
     }
 
     screen.innerText = answer;
     num1 = screen.innerText;
+    opPressed = false;
+    num2 = undefined;
 
 
 }
