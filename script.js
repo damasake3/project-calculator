@@ -9,6 +9,41 @@ let opPressed = false;
 
 console.log(num1, num2, operator, opPressed, "\n");
 
+document.addEventListener("keyup", (e) => {
+    let keyPress = e.key;
+    let tempObj = { value: keyPress, id: "" };
+    if (isFinite(keyPress)) {
+        console.log(`${keyPress} is number`);
+        console.log(`tempObj.value: ${tempObj.value}`);
+        numOps(tempObj, opPressed, "num");
+    }
+    else if (keyPress === "+" || keyPress === "-"
+        || keyPress === "*" || keyPress === "/"
+    ) {
+        console.log(`${keyPress} is operator`);
+        operatorOps(tempObj);
+    }
+    else if (keyPress === "=" || keyPress === "Enter") {
+        console.log(`${keyPress} is equal`);
+        tempObj.value = "=";
+        equalOps(tempObj);
+    }
+    else if (keyPress === "Backspace") {
+        console.log(`${keyPress} is special`);
+        tempObj.value, tempObj.id = "clearEntry";
+        numOps(tempObj, opPressed, "clearEntry");
+    }
+    else if (keyPress === ".") {
+        console.log(`${keyPress} is special`);
+        decimalPoint();
+    }
+    else {
+        console.log(`${keyPress} invalid`);
+    }
+
+});
+
+
 buttons.addEventListener("click", (e) => {
     let target = e.target;
     console.log(target.id);
@@ -52,6 +87,7 @@ function clearEntry(target, mode) {
     console.log("clearEntry");
     console.log(`On Display: ${screen.innerText}`);
     console.log(`${num1} ${operator} ${num2}`);
+    console.log(`THE MODE: ${mode}`);
 
 
     numOps(target, opPressed, mode);
