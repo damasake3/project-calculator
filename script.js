@@ -9,10 +9,22 @@ let opPressed = false;
 
 console.log(num1, num2, operator, opPressed, "\n");
 
+function hoverKey(color, btn) {
+    btn.style.backgroundColor = color;
+    setTimeout(() => {
+        btn.removeAttribute("style", "background-color:;");
+    }, 120);
+}
+
 document.addEventListener("keyup", (e) => {
     let keyPress = e.key;
     let tempObj = { value: keyPress, id: "" };
+    let btn = buttons.querySelector(`[value="${keyPress}"]`);
+    console.log(btn);
+
     if (isFinite(keyPress)) {
+        hoverKey("dimgrey", btn);
+
         console.log(`${keyPress} is number`);
         console.log(`tempObj.value: ${tempObj.value}`);
         numOps(tempObj, opPressed, "num");
@@ -20,20 +32,30 @@ document.addEventListener("keyup", (e) => {
     else if (keyPress === "+" || keyPress === "-"
         || keyPress === "*" || keyPress === "/"
     ) {
+        hoverKey("blue", btn);
+
         console.log(`${keyPress} is operator`);
         operatorOps(tempObj);
     }
     else if (keyPress === "=" || keyPress === "Enter") {
+        btn = buttons.querySelector(`[value="="]`);
+        hoverKey("blue", btn);
+
         console.log(`${keyPress} is equal`);
         tempObj.value = "=";
         equalOps(tempObj);
     }
     else if (keyPress === "Backspace") {
+        btn = buttons.querySelector(`[value="clearEntry"]`);
+        hoverKey("orangered", btn);
+
         console.log(`${keyPress} is special`);
         tempObj.value, tempObj.id = "clearEntry";
         numOps(tempObj, opPressed, "clearEntry");
     }
     else if (keyPress === ".") {
+        hoverKey("blue", btn);
+
         console.log(`${keyPress} is special`);
         decimalPoint();
     }
