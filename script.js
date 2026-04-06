@@ -136,7 +136,9 @@ function numOps(target, opPressed, mode) {
             console.log("Clear Entry");
             if (opPressed === false) {
                 console.log("Not opPressed.")
-                if (screen.innerText == 0 && !checkDecimal(screen.innerText)) {
+                console.log(`ScreenDisplay Length: ${screen.innerText.length} \n`);
+                if (screen.innerText.length === 1 && !checkDecimal(screen.innerText)) {
+                    screen.innerText = 0;
                     num1 = Number(screen.innerText);
                     console.log(num1, num2, operator);
                 }
@@ -147,8 +149,10 @@ function numOps(target, opPressed, mode) {
                 }
             }
             else {
-                console.log("Is opPressed.")
-                if (screen.innerText == 0 && !checkDecimal(screen.innerText)) {
+                console.log("Is opPressed.");
+                console.log(`ScreenDisplay Length: ${screen.innerText.length} \n`);
+                if (screen.innerText.length === 1 && !checkDecimal(screen.innerText)) {
+                    screen.innerText = 0;
                     num2 = Number(screen.innerText);
                     console.log(num1, num2, operator);
                 }
